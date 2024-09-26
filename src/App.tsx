@@ -1,7 +1,7 @@
 import './reset.css';
 import './App.css';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const App = () => {
   type jsonplaceholderPost = {
@@ -24,18 +24,7 @@ export const App = () => {
 
   const buttonRef = useRef<HTMLButtonElement[]>([]);
 
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => response.json())
-      .then((json: jsonplaceholderPost[]) => {
-        setList(json);
-      })
-      .catch(() => {
-        window.alert('포스트 데이터를 불러오지 못했습니다.');
-      });
-  }, []);
-
-  const handleContent = (post: jsonplaceholderPost) => {
+  const handleContent = useCallback((post: jsonplaceholderPost) => {
     setContent(post.body);
     fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
       .then((response) => response.json())
@@ -45,7 +34,22 @@ export const App = () => {
       .catch(() => {
         window.alert('댓글 데이터를 불러오지 못했습니다.');
       });
-  };
+  }, []);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((json: jsonplaceholderPost[]) => {
+        setList(json);
+        const firstPost = json[0];
+        if (firstPost !== undefined) {
+          handleContent(firstPost);
+        }
+      })
+      .catch(() => {
+        window.alert('포스트 데이터를 불러오지 못했습니다.');
+      });
+  }, [handleContent]);
 
   return (
     <div className="w-screen h-screen flex items-center justify-center px-4 sm:p-10 bg-zinc-100">
