@@ -116,7 +116,7 @@ export const App = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full overflow-hidden sm:hidden">
+      <div className="flex flex-col w-full overflow-hidden sm:hidden scroll">
         <div className="relative flex flex-col w-full h-[2.5rem] px-3 space-y-3 bg-white rounded-2xl shadow-lg">
           <div className="flex justify-between items-center w-full h-full">
             <p className="w-fit h-fit text-lg font-bold brush-line z-10">
@@ -172,7 +172,7 @@ export const App = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col sm:hidden w-full h-[35rem] mt-4 p-3 space-y-3 bg-white rounded-2xl shadow-lg">
+        <div className="flex flex-col sm:hidden w-full h-[25rem] mt-4 p-3 space-y-3 bg-white rounded-2xl shadow-lg">
           <p className="w-fit text-lg font-bold brush-line z-10">👥댓글</p>
           <div className="h-full space-y-3 overflow-y-scroll text-sm">
             {comment === null ? (
