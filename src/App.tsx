@@ -1,7 +1,7 @@
 import './reset.css';
 import './App.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const App = () => {
   type jsonplaceholderPost = {
@@ -20,6 +20,8 @@ export const App = () => {
   const [list, setList] = useState<jsonplaceholderPost[]>();
   const [content, setContent] = useState<string>();
   const [comment, setComment] = useState<jsonplaceholderComment[] | null>(null);
+
+  const buttonRef = useRef<HTMLButtonElement[]>([]);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -52,13 +54,18 @@ export const App = () => {
             ✨포스트 목록
           </p>
           <div className="overflow-y-scroll flex flex-col">
-            {list?.map((post) => (
+            {list?.map((post, index) => (
               <button
-                className="flex justify-start p-2 mx-2 rounded-lg hover:bg-zinc-200 focus:ring-blue-300 focus:ring-2 font-semibold duration-300 animate-fadeIn"
-                key={post.id}
+                className={
+                  post.body === content
+                    ? 'flex justify-start p-2 mx-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:ring-blue-300 focus:ring-2 font-semibold duration-300 animate-fadeIn'
+                    : 'flex justify-start p-2 mx-2 rounded-lg hover:bg-blue-500/30 focus:ring-blue-300 focus:ring-2 font-semibold duration-300 animate-fadeIn'
+                }
+                key={index}
                 onClick={() => {
                   handleContent(post);
                   setComment(null);
+                  buttonRef.current[index]?.classList.add('bg-blue-200');
                 }}
               >
                 <div className="mr-3">{post.id}.</div>
