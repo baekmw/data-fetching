@@ -24,7 +24,7 @@ export const App = () => {
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then((response) => response.json())
-      .then((json) => {
+      .then((json: jsonplaceholderPost[]) => {
         setList(json);
       })
       .catch(() => {
@@ -36,7 +36,7 @@ export const App = () => {
     setContent(post.body);
     fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
       .then((response) => response.json())
-      .then((json) => {
+      .then((json: jsonplaceholderComment[]) => {
         setComment(json);
       })
       .catch(() => {
@@ -45,8 +45,8 @@ export const App = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center p-5 bg-zinc-100">
-      <div className="grid grid-cols-2 grid-rows-2 w-full h-[50rem] p-3 bg-white rounded-2xl shadow-xl">
+    <div className="w-screen h-screen flex items-center justify-center p-10 bg-zinc-100">
+      <div className="grid grid-cols-2 grid-rows-2 w-full h-full p-3 bg-white rounded-2xl shadow-xl">
         <div className="col-span-1 row-span-2 flex flex-col h-full pr-[3px] space-y-3 border-r-2 border-zinc-300">
           <p className="w-fit text-xl font-bold brush-line z-10">
             ✨포스트 목록
